@@ -41,12 +41,6 @@ RUN pip install dateutils
 # Install netaddr
 RUN pip install netaddr
 
-# Install pycurl
-RUN \
-  apt-get update && \
-  apt-get install -y libcurl4-gnutls-dev && \
-  apt-get install -y python-pycurl
-
 # Install couchbase dev tools
 RUN wget http://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-4-amd64.deb && \ 
   dpkg -i couchbase-release-1.0-4-amd64.deb && \
