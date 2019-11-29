@@ -10,7 +10,8 @@ RUN \
   apt-get -y upgrade && \
   apt-get install -y build-essential && \
   apt-get install -y software-properties-common && \
-  apt-get install -y vim wget curl bash-completion
+  apt-get install -y vim wget curl bash-completion && \
+  apt-get install -y libcurl4-openssl-dev libssl-dev
 
 
 # Install python 2.7 
@@ -25,21 +26,14 @@ RUN wget https://bootstrap.pypa.io/get-pip.py && \
   python get-pip.py && \
   rm -f /usr/bin/pip && ln -s /usr/local/bin/pip /usr/bin/pip && \
   rm get-pip.py
-  
-# Install mysql connector and requests modules for python
-RUN pip install mysql-connector-python-rf requests
 
-# Install paramiko for scp
-RUN pip install paramiko scp
+# Clean potential old libraries
+RUN \
+  apt -y purge python-pycurl && \
+  apt -y install python-pycurl
 
-# Install pika for rabbitmq
-RUN pip install pika
-
-# Install dateutils
-RUN pip install dateutils
-
-# Install netaddr
-RUN pip install netaddr
+# Install additional packages
+RUN pip install mysql-connector-python-rf requests paramiko scp dateutils pycurl pika netaddr
 
 # Install couchbase dev tools
 RUN wget http://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-4-amd64.deb && \ 
@@ -52,4 +46,3 @@ RUN wget http://packages.couchbase.com/releases/couchbase-release/couchbase-rele
 
 
 CMD ["python"]
-
