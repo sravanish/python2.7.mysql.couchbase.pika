@@ -29,12 +29,15 @@ RUN wget https://bootstrap.pypa.io/get-pip.py && \
 
 # Clean potential old libraries
 RUN \
-  apt-get update && \
   apt -y purge python-pycurl && \
+  apt-get update && \
   apt -y install python-pycurl
 
 # Install additional packages
-RUN pip install mysql-connector-python-rf requests paramiko scp dateutils pycurl pika netaddr dateutils
+RUN pip install mysql-connector-python-rf requests paramiko scp dateutils pycurl pika
+
+# Install netaddr
+RUN pip install netaddr
 
 # Install couchbase dev tools
 RUN wget http://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-4-amd64.deb && \ 
